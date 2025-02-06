@@ -24,13 +24,13 @@ jobs:
         if: failure()
         run: echo "Tests failed, stopping the build"
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
-
       - name: Log in to DockerHub
         run: |
           username: ${{ vars.DOCKER_USERNAME }} # Set in GitHub secrets
           password: ${{ secrets.DOCKER_PASSWORD }} # Set in GitHub secrets
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
 
       - name: Build Docker image
         run: |
@@ -40,3 +40,7 @@ jobs:
       - name: Push Docker image
         run: |
           docker push ${{ vars.DOCKER_USERNAME }}/1myapp:${{ github.sha }}
+          - name: Verify Docker image
+          if: success()
+          run: |
+            docker pull ${{ vars.DOCKER_USERNAME }}/1myapp:${{ github.sha }}
