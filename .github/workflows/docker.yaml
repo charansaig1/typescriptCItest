@@ -36,6 +36,8 @@ jobs:
         run: |
           IMAGE="charansaig1/myappcac"
           TAG_TO_KEEP="be560d48ba2fa033b4fa64a94fde98e4e458c4e0"
+
+          # Loop over all tags to remove outdated versions
           for TAG in ${{ steps.tags.outputs.tags }}; do  # Access tags via the correct output
             if [[ "$TAG" != "$TAG_TO_KEEP" ]]; then
               echo "Removing outdated tag: $TAG"
@@ -43,7 +45,14 @@ jobs:
             fi
           done
 
-      # Optional: Push the latest image to Docker Hub after cleanup
-      - name: Push the latest Docker image
-        run: |
-          docker push charansaig1/myappcac:${TAG_TO_KEEP}
+          # Check if the tag we want to keep is available on Docker Hub
+          echo "Checking if the image with tag $TAG_TO_KEEP exists on Docker Hub..."
+          RESPONSE=$(curl -s -o /dev/null -w "%{http_code}" https://hub.docker.com/v2/repositories/${IMAGE}/tags/${TAG_TO_KEEP})
+
+          # If the response code is 200, the image exists, else it's not available
+          if [ "$RESPONSE" -eq 200 ]; then
+            echo "Image $IMAGE:${TAG_TO_KEEP} is available on Docker Hub."
+            echo "Cleaned up unused Docker image versions."
+          else
+            echo "Error: Image $IMAGE:${TAG_TO_KEEP} is not available on Docker Hub."
+          fi
