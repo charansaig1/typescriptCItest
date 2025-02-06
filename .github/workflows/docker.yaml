@@ -3,7 +3,7 @@ name: Build and Push Docker Image
 on:
   push:
     branches:
-      - master# or any branch you want this to run on
+      - master
 
 jobs:
   test:
@@ -38,9 +38,6 @@ jobs:
           docker tag 1myapp:latest ${{ vars.DOCKER_USERNAME }}/1myapp:${{ github.sha }}
 
       - name: Push Docker image
+
         run: |
           docker push ${{ vars.DOCKER_USERNAME }}/1myapp:${{ github.sha }}
-          - name: Verify Docker image
-          if: success()
-          run: |
-            docker pull ${{ vars.DOCKER_USERNAME }}/1myapp:${{ github.sha }}
