@@ -16,6 +16,9 @@ COPY . .
 # Run tests (if this fails, the build stops)
 RUN npm test
 
+# Build the app
+RUN npm run build
+
 # Expose the port your app runs on
 EXPOSE 3000
 
