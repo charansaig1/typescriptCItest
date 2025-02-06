@@ -53,10 +53,10 @@ jobs:
       - name: Build Docker image
         if: success()
         run: |
-          docker build -t myapp:latest .
-          docker tag myapp:latest ${{ vars.DOCKER_USERNAME }}/myapp:${{ github.sha }}
+          docker build -t 1myapp:latest .
+          docker tag 1myapp:latest ${{ vars.DOCKER_USERNAME }}/1myapp:${{ github.sha }}
 
       - name: Push Docker image
         if: success()
         run: |
-          docker push ${{ vars.DOCKER_USERNAME }}/myapp:${{ github.sha }}
+          docker push ${{ vars.DOCKER_USERNAME }}/1myapp:${{ github.sha }}
