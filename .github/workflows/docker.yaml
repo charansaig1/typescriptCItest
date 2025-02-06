@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - master # or any branch you want this to run on
-  pull_request:
 
 jobs:
   test:
@@ -60,7 +59,7 @@ jobs:
             ${{ runner.os }}-buildx-
 
       - name: Build and Push Docker Image
-        uses: docker/build-push-action@v3
+        uses: docker/build-push-action@v5
         with:
           context: .
           push: true
