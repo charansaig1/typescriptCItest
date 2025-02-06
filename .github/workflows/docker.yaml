@@ -43,8 +43,8 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t myapp:latest .
-          docker tag myapp:latest ${{ vars.DOCKER_USERNAME }}/myapp:${{ github.sha }}
+          docker build -t myapp1:latest .
+          docker tag myapp1:latest ${{ vars.DOCKER_USERNAME }}/myapp1:${{ github.sha }}
 
       - name: Push Docker image
-        run: docker push ${{ vars.DOCKER_USERNAME }}/myapp:${{ github.sha }}
+        run: docker push ${{ vars.DOCKER_USERNAME }}/myapp1:${{ github.sha }}
