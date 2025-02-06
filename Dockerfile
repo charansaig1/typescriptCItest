@@ -22,12 +22,11 @@ RUN npm run build
 # Final stage
 FROM node:16-slim
 
-
 # Set the working directory
 WORKDIR /app
 
 # Copy the built app from the previous stage
-COPY --from=build /usr/src/app .
+COPY --from=build /usr/src/app ./
 
 # Expose the port your app runs on
 EXPOSE 3000
