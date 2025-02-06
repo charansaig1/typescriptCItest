@@ -67,6 +67,6 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${{ vars.DOCKER_USERNAME }}/myappcac:latest,${{ vars.DOCKER_USERNAME }}/myappcac:${{ github.sha }}
+          tags: ${{ vars.DOCKER_USERNAME }}/myappcac:${{ github.sha }}
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache,mode=max
